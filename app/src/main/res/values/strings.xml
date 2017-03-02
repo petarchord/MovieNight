@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MovieNight</string>
+    <string name="welcome_text">Welcome</string>
+    <string name="make_acc">Register New Account</string>
+    <string name="btn_signup">Signup</string>
+    <string name="btn_signin">Already registered? Sign in</string>
+    <string name="welcome_back_text">Welcome back</string>
+    <string name="sign_in_text">Sign In</string>
+    <string name="ima_acc">Login</string>
+    <string name="nema_acc">Don\'t have an account? Register now.</string>
+</resources>
