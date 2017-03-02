@@ -1,10 +1,12 @@
 package com.example.nikola.movienight;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.LoginFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -87,6 +91,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void signIn() {
+        Intent signAct = new Intent(this, LoginActivity.class);
+        startActivity(signAct);
+        finish();
+    }
+
     @Override
     public void onClick(View view) {
 
@@ -132,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
             }
         } else if(view == signin) {
-            toastShow("Signin: treba implementirati.");
+            signIn();
         }
     }
 }
