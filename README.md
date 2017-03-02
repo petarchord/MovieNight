@@ -1,8 +1,11 @@
 # MovieNight
 
-+ Mihajlo
+## Mihajlo
 
-+ Petar
+## Petar
 
-+ Nikola
-++ Registracija odradjena
+## Nikola
++ Registracija realizovana
+
+### In progress
++ Realizacija login strane
