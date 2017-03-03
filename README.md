@@ -7,5 +7,6 @@
 ## Nikola
 + Registracija realizovana
 
+
 ### In progress
-+ Realizacija login strane
++ Realizacija login strane (izgled zavrsen, jos samo logika)
