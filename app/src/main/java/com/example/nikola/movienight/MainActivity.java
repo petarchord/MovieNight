@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     //Samo radi debug-ovanja
     private String TAG = "Signup Activity";
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button          signin;
 
     private FirebaseAuth   firebaseAuth;
-    private ProgressDialog progressBar;
+    //private ProgressDialog progressBar;
 
     /*
     *
@@ -54,13 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_SHORT).show();
     }
 
-    // Ova metoda se koristi za sakrivanje virtualne tastature jer android nije implementiran
-    // da tastaturu uklanja kad se klikne (tapne) na dugme tako da je ovo pomocna metoda
-    private void hideKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Singleton za komunikaciju sa Firebase Authentication servisom
         firebaseAuth = FirebaseAuth.getInstance();
-        progressBar  = new ProgressDialog(this);
+        //progressBar  = new ProgressDialog(this);
 
         email        = (EditText) findViewById(R.id.email);
         password     = (EditText) findViewById(R.id.password);
@@ -88,7 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void signupUser() {
-
+        Intent movAct = new Intent(this, MoviesActivity.class);
+        startActivity(movAct);
+        finish();
     }
 
     private void signIn() {
@@ -126,15 +121,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
 
                 // Ako su username (mail) i password popunjeni onda ce registrovati korisnika (signupUser())
-                progressBar.setMessage("Signing up new user...");
-                progressBar.show();
+                //progressBar.setMessage("Signing up new user...");
+                //progressBar.show();
                 //toastShow("Uspeh!");
+                showProgressDialog("Registering new user...");
                 firebaseAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             //OVde prikazati sledeci main activity i nastaviti rad aplikacije
                             toastShow("Success!");
+                            hideProgressDialog();
+                            signupUser();
                         } else {
                             toastShow("Failed to connect to the service.");
                         }

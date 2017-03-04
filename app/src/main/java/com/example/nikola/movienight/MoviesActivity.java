@@ -16,7 +16,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-public class MoviesActivity extends AppCompatActivity {
+public class MoviesActivity extends BaseActivity {
 
     private TextView resp;
 
