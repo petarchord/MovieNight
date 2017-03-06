@@ -1,12 +1,15 @@
 package com.example.nikola.movienight.Model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nikola.movienight.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,6 +21,7 @@ public class FilmListAdapter extends BaseAdapter {
 
     private Context aContext;
     private List<Film> mListFilm;
+    private String TAG = "";
 
     public FilmListAdapter(Context context, List<Film> list) {
         this.aContext  = context;
@@ -45,8 +49,11 @@ public class FilmListAdapter extends BaseAdapter {
         TextView nazivFilma = (TextView) v.findViewById(R.id.naziv_filma);
         //TextView zanrFilma  = (TextView) v.findViewById(R.id.zanr_filma);
         //TextView opisFilma  = (TextView) v.findViewById(R.id.opis_filma);
+        ImageView poster = (ImageView) v.findViewById(R.id.poster);
 
         nazivFilma.setText(mListFilm.get(i).getNaziv());
+        //Log.d(TAG, "FilmListAdapter:poster" + mListFilm.get(i).getPoster());
+        Picasso.with(aContext).load(mListFilm.get(i).getPoster()).into(poster);
         //zanrFilma.setText(mListFilm.get(i).getZanr());
         //opisFilma.setText(mListFilm.get(i).getOpis());
 

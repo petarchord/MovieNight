@@ -7,10 +7,12 @@ import java.util.Date;
  */
 public class Film {
     private String naziv;
+    private String poster;
+    private String opis;
+
+    private Date   pocetak;
     private String zanr;
     private double ocena;
-    private String opis;
-    private Date   pocetak;
 
     public Film(String naziv, String zanr, double ocena, String opis, Date pocetak) {
         this.naziv   = naziv;
@@ -20,21 +22,21 @@ public class Film {
         this.pocetak = pocetak;
     }
 
-    public Film(String naziv, String zanr, String opis) {
-        this.naziv   = naziv;
-        this.zanr    = zanr;
-        this.opis    = opis;
+    public Film(String naziv, String opis, String poster) {
+        this.naziv  = naziv;
+        this.poster = poster;
+        this.opis   = opis;
     }
 
     public Film(String naziv) { this.naziv   = naziv; }
 
-    public Film(String original_title, String overview) {
-        this.naziv = original_title;
-        this.opis = overview;
-    }
 
     public String getNaziv() {
         return this.naziv;
+    }
+
+    public String getPoster() {
+        return this.poster;
     }
 
     //public String getZanr() { return this.zanr; }

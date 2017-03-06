@@ -67,10 +67,10 @@ public class MoviesActivity extends BaseActivity {
                     while (count < jsonObject.length()) {
                         JSONObject JO = jsonArray.getJSONObject(count);
 
-                        Log.d(TAG, JO.getString("original_title"));
+                        //Log.d(TAG, JO.getString("original_title"));
                         //Log.d(TAG, JO.getString("overview"));
-                        mFilmList.add(new Film(JO.getString("original_title"), JO.getString("overview")));
-
+                        mFilmList.add(new Film(JO.getString("original_title"), JO.getString("overview"), "https://image.tmdb.org/t/p/w500" + JO.getString("poster_path")));
+                        //Log.d(TAG, JO.getString("poster_path"));
                         count++;
                     }
 
