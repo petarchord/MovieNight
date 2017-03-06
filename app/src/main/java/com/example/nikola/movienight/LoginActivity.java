@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,17 +15,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final String TAG = "Login Activity";
     private EditText email;
     private EditText password;
     private Button   signin;
     private Button   signup;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user == null) {
+                    redirectLogin(user);
+                } else {
+                    redirectSignup();
+                }
+            }
+        };
 
         email    = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
@@ -62,6 +77,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
             }
         });
+    }
+
+    private void redirectLogin(FirebaseUser user) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+        Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
+    }
+
+    private void redirectSignup() {
+        Intent intent = new Intent(this, MoviesActivity.class);
+        Log.d(TAG, "onAuthStateChanged:signed_out");
+        startActivity(intent);
+        finish();
     }
 
     @Override

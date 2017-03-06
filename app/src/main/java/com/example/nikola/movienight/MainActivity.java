@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button          signin;
 
     private FirebaseAuth   firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseListener;
     //private ProgressDialog progressBar;
 
     /*
@@ -61,6 +63,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         //Singleton za komunikaciju sa Firebase Authentication servisom
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user == null) {
+                    redirectLogin(user);
+                } else {
+                    redirectSignup();
+                }
+            }
+        };
         //progressBar  = new ProgressDialog(this);
 
         email        = (EditText) findViewById(R.id.email);
@@ -70,6 +83,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         emailLabel    = (TextInputLayout) findViewById(R.id.emailLabel);
         passwordLabel = (TextInputLayout) findViewById(R.id.passwordLabel);
+
+
+
+
 
         // Postavljamo OnClickListener za dugme sa ID - em signup, a taj listener ce biti
         // sama aplikacija. Implementacijom ovog interfejsa sam kod postaje fleksibilniji i otporniji
@@ -130,11 +147,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             //OVde prikazati sledeci main activity i nastaviti rad aplikacije
-                            toastShow("Success!");
+                            toastShow("Success!" + task.getResult().toString());
                             hideProgressDialog();
                             signupUser();
                         } else {
                             toastShow("Failed to connect to the service.");
+                            hideProgressDialog();
                         }
                     }
                 });
@@ -142,5 +160,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } else if(view == signin) {
             signIn();
         }
+    }
+
+
+    //Ove dve funkcije trebalo bi da se prebace u BaseActivity u buducnosti jer su primer
+    //koda koji se ponavlja
+    private void redirectLogin(FirebaseUser user) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+        Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
+    }
+
+    private void redirectSignup() {
+        Intent intent = new Intent(this, MoviesActivity.class);
+        Log.d(TAG, "onAuthStateChanged:signed_out");
+        startActivity(intent);
+        finish();
     }
 }
