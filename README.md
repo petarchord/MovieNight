@@ -12,5 +12,6 @@
 + U ListView se ucitavaju svi filmovi iz API-ja
 + Za svaki Item iz ListView-a podesen onItemClick event
 + Za svaki Item iz ListView-a (API-a) podesena pozadina
++ Kad se izadje iz aplikacije cuva se sesija dok se ne pritisne na back (strelica)
 
 ### In progress
