@@ -46,12 +46,12 @@ public class FilmListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(aContext, R.layout.item, null);
-        TextView nazivFilma = (TextView) v.findViewById(R.id.naziv_filma);
+        //TextView nazivFilma = (TextView) v.findViewById(R.id.naziv_filma);
         //TextView zanrFilma  = (TextView) v.findViewById(R.id.zanr_filma);
         //TextView opisFilma  = (TextView) v.findViewById(R.id.opis_filma);
         ImageView poster = (ImageView) v.findViewById(R.id.poster);
 
-        nazivFilma.setText(mListFilm.get(i).getNaziv());
+        //nazivFilma.setText(mListFilm.get(i).getNaziv());
         //Log.d(TAG, "FilmListAdapter:poster" + mListFilm.get(i).getPoster());
         Picasso.with(aContext).load(mListFilm.get(i).getPoster()).into(poster);
         //zanrFilma.setText(mListFilm.get(i).getZanr());
